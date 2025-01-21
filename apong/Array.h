@@ -18,39 +18,19 @@ private:
     int s;
 
 public:
-    Array()
-    :
-    p(nullptr),
-    s(0)
-    {}
+    Array() : p(nullptr), s(0) {}
 
-    Array(
-        const Array<T> &other
-    )
-    :
-    p(nullptr),
-    s(0)
+    Array(const Array<T> &other) : p(nullptr), s(0)
     {
         *this = other;
     }
 
-    Array(
-        int size
-    )
-    :
-    p(nullptr),
-    s(0)
+    Array(int size) : p(nullptr), s(0)
     {
         resize(size);
     }
 
-    Array(
-        int size,
-        T value
-    )
-    :
-    p(nullptr),
-    s(0)
+    Array(int size, T value) : p(nullptr), s(0)
     {
         resize(size, value);
     }
@@ -60,9 +40,7 @@ public:
             delete[] p;
     }
 
-    Array<T> &operator=(
-        const Array<T> &other
-    ) {
+    Array<T> &operator=(const Array<T> &other) {
         if (s != other.s) {
             if (p != nullptr)
                 delete[] p;
@@ -78,9 +56,7 @@ public:
         return *this;
     }
 
-    void resize(
-        int size
-    ) {
+    void resize(int size) {
         if (s == size)
             return;
 
@@ -104,10 +80,7 @@ public:
             delete[] temp;
     }
 
-    void resize(
-        int size,
-        T value
-    ) {
+    void resize(int size, T value) {
         int oldS = s;
 
         resize(size);
@@ -116,17 +89,13 @@ public:
             p[i] = value;
     }
 
-    T &operator[](
-        int index
-    ) {
+    T &operator[](int index) {
         assert(index >= 0 && index < s);
 
         return p[index];
     }
 
-    const T &operator[](
-        int index
-    ) const {
+    const T &operator[](int index) const {
         assert(index >= 0 && index < s);
         
         return p[index];
@@ -136,9 +105,7 @@ public:
         return s;
     }
 
-    void fill(
-        T value
-    ) {
+    void fill(T value) {
         for (int i = 0; i < s; i++)
             p[i] = value;
     }
