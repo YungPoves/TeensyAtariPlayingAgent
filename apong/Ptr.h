@@ -15,14 +15,9 @@ private:
     T* p;
     
 public:
-    Ptr()
-    :
-    p(nullptr)
-    {}
+    Ptr() : p(nullptr) {}
 
-    Ptr(
-        const Ptr &other
-    ) {
+    Ptr(const Ptr &other) {
         p = nullptr;
 
         *this = other;
@@ -33,9 +28,7 @@ public:
             delete p;
     }
 
-    Ptr &operator=(
-        const Ptr &other
-    ) {
+    Ptr &operator=(const Ptr &other) {
         if (p != nullptr)
             delete p;
 
@@ -50,9 +43,7 @@ public:
         return *this;
     }
 
-    Ptr &operator=(
-        T* other
-    ) {
+    Ptr &operator=(T* other) {
         if (p != nullptr)
             delete p;
 
@@ -96,27 +87,19 @@ public:
         return p;
     }
 
-    bool operator==(
-        const Ptr &other
-    ) const {
+    bool operator==(const Ptr &other) const {
         return p == other.p;
     }
 
-    bool operator!=(
-        const Ptr &other
-    ) const {
+    bool operator!=(const Ptr &other) const {
         return p != other.p;
     }
 
-    bool operator==(
-        T* other
-    ) const {
+    bool operator==(T* other) const {
         return p == other;
     }
 
-    bool operator!=(
-        T* other
-    ) const {
+    bool operator!=(T* other) const {
         return p != other;
     }
 };
