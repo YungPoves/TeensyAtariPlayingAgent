@@ -25,10 +25,7 @@ const int sinIters = 5;
 const float pi = 3.14159f;
 const float pi2 = pi * 2.0f;
 
-inline float modf(
-    float x,
-    float y
-) {
+inline float modf(float x, float y) {
     return x - static_cast<int>(x / y) * y;
 }
 
@@ -53,18 +50,14 @@ float powf(
     float y
 );
 
-inline float ceilf(
-    float x
-) {
+inline float ceilf(float x) {
     if (x > 0.0f)
         return (x - static_cast<int>(x)) > 0.0f ? static_cast<int>(x + 1) : static_cast<int>(x);
 
     return (x - static_cast<int>(x)) < 0.0f ? static_cast<int>(x - 1) : static_cast<int>(x);
 }
 
-inline int roundftoi(
-    float x
-) {
+inline int roundftoi(float x) {
     if (x > 0.0f)
         return static_cast<int>(x + 0.5f);
 
@@ -73,10 +66,7 @@ inline int roundftoi(
 
 #ifndef USE_ARDUINO_MATH
 template <typename T>
-T min(
-    T left,
-    T right
-) {
+T min(T left, T right) {
     if (left < right)
         return left;
     
@@ -84,10 +74,7 @@ T min(
 }
 
 template <typename T>
-T max(
-    T left,
-    T right
-) {
+T max(T left, T right) {
     if (left > right)
         return left;
     
@@ -96,10 +83,7 @@ T max(
 #endif
 
 template <typename T>
-void swap(
-    T &left,
-    T &right
-) {
+void swap(T &left, T &right) {
     T temp = left;
     left = right;
     right = temp;
@@ -119,12 +103,7 @@ struct Vec2 {
 
     Vec2() {}
 
-    Vec2(
-        T x,
-        T y
-    )
-    : x(x), y(y)
-    {}
+    Vec2(T x, T y) : x(x), y(y) {}
 };
 
 template <typename T> 
@@ -132,33 +111,18 @@ struct Vec3 {
     T x, y, z;
     T pad;
 
-    Vec3()
-    {}
+    Vec3() {}
 
-    Vec3(
-        T x,
-        T y,
-        T z
-    )
-    : x(x), y(y), z(z)
-    {}
+    Vec3(T x, T y, T z) : x(x), y(y), z(z) {}
 };
 
 template <typename T> 
 struct Vec4 {
     T x, y, z, w;
 
-    Vec4()
-    {}
+    Vec4() {}
 
-    Vec4(
-        T x,
-        T y,
-        T z,
-        T w
-    )
-    : x(x), y(y), z(z), w(w)
-    {}
+    Vec4(T x, T y, T z, T w) : x(x), y(y), z(z), w(w) {}
 };
 
 // Some basic definitions
@@ -183,14 +147,9 @@ struct CircleBuffer {
     Array<T> data;
     int start;
 
-    CircleBuffer()
-    :
-    start(0)
-    {}
+    CircleBuffer() : start(0) {}
 
-    void resize(
-        int size
-    ) {
+    void resize(int size) {
         data.resize(size);
     }
 
@@ -237,82 +196,51 @@ struct CircleBuffer {
 // --- Bounds ---
 
 // Bounds check from (0, 0) to upperBound
-inline bool inBounds0(
-    const Int2 &pos,
-    const Int2 &upperBound
-) {
+inline bool inBounds0(const Int2 &pos, const Int2 &upperBound) {
     return pos.x >= 0 && pos.x < upperBound.x && pos.y >= 0 && pos.y < upperBound.y;
 }
 
 // Bounds check in range
-inline bool inBounds(
-    const Int2 &pos,
-    const Int2 &lowerBound,
-    const Int2 &upperBound
-) {
+inline bool inBounds(const Int2 &pos, const Int2 &lowerBound, const Int2 &upperBound) {
     return pos.x >= lowerBound.x && pos.x < upperBound.x && pos.y >= lowerBound.y && pos.y < upperBound.y;
 }
 
 // --- Projections ---
 
-inline Int2 project(
-    const Int2 &pos, // Position
-    const Float2 &toScalars // Ratio of sizes
-) {
+inline Int2 project(const Int2 &pos, /* Position*/ const Float2 &toScalars /*Ratio of sizes*/) {
     return Int2((pos.x + 0.5f) * toScalars.x, (pos.y + 0.5f) * toScalars.y);
 }
 
-inline Int2 projectf(
-    const Float2 &pos, // Position
-    const Float2 &toScalars // Ratio of sizes
-) {
+inline Int2 projectf(const Float2 &pos, /*Position*/ const Float2 &toScalars /*Ratio of sizes*/) {
     return Int2((pos.x + 0.5f) * toScalars.x, (pos.y + 0.5f) * toScalars.y);
 }
 
-Int2 minOverhang(
-    const Int2 &pos,
-    const Int2 &size,
-    const Int2 &radii
-);
+Int2 minOverhang(const Int2 &pos, const Int2 &size, const Int2 &radii);
 
-inline Int2 minOverhang(
-    const Int2 &pos,
-    const Int2 &size,
-    int radius
-) {
+inline Int2 minOverhang(const Int2 &pos, const Int2 &size, int radius) {
     return minOverhang(pos, size, Int2(radius, radius));
 }
 
 // --- Addressing ---
 
 // Row-major
-inline int address2(
-    const Int2 &pos, // Position
-    const Int2 &dims // Dimensions to ravel with
+inline int address2(const Int2 &pos, /*Position*/ const Int2 &dims /*Dimensions to ravel with*/
 ) {
     return pos.y + pos.x * dims.y;
 }
 
-inline int address3(
-    const Int3 &pos, // Position
-    const Int3 &dims // Dimensions to ravel with
-) {
+inline int address3(const Int3 &pos, /*Position*/ const Int3 &dims /*Dimensions to ravel with*/) {
     return pos.z + dims.z * (pos.y + dims.y * pos.x);
 }
 
-inline int address4(
-    const Int4 &pos, // Position
-    const Int4 &dims // Dimensions to ravel with
-) {
+inline int address4(const Int4 &pos, /*Position*/ const Int4 &dims /*Dimensions to ravel with*/) {
     return pos.w + dims.w * (pos.z + dims.z * (pos.y + dims.y * pos.x));
 }
 
 // --- Getters ---
 
 template <typename T>
-Array<Array<T>*> get(
-    Array<Array<T>> &v
-) {
+Array<Array<T>*> get(Array<Array<T>> &v) {
     Array<T*> vp(v.size());
 
     for (int i = 0; i < v.size(); i++)
@@ -322,9 +250,7 @@ Array<Array<T>*> get(
 }
 
 template <typename T>
-Array<const Array<T>*> constGet(
-    const Array<Array<T>> &v
-) {
+Array<const Array<T>*> constGet(const Array<Array<T>> &v) {
     Array<const Array<T>*> vp(v.size());
 
     for (int i = 0; i < v.size(); i++)
@@ -334,9 +260,7 @@ Array<const Array<T>*> constGet(
 }
 
 template <typename T>
-Array<Array<T>*> get(
-    CircleBuffer<Array<T>> &v
-) {
+Array<Array<T>*> get(CircleBuffer<Array<T>> &v) {
     Array<T*> vp(v.size());
 
     for (int i = 0; i < v.size(); i++)
@@ -346,9 +270,7 @@ Array<Array<T>*> get(
 }
 
 template <typename T>
-Array<const Array<T>*> constGet(
-    const CircleBuffer<Array<T>> &v
-) {
+Array<const Array<T>*> constGet(const CircleBuffer<Array<T>> &v) {
     Array<const Array<T>*> vp(v.size());
 
     for (int i = 0; i < v.size(); i++)
@@ -359,9 +281,7 @@ Array<const Array<T>*> constGet(
 
 // --- Noninearities ---
 
-inline float sigmoidf(
-    float x
-) {
+inline float sigmoidf(float x) {
 #ifdef USE_ARDUINO_MATH
     return tanh(x * 0.5f) * 0.5f + 0.5f;
 #else
@@ -375,9 +295,7 @@ inline float sigmoidf(
 #endif
 }
 
-inline float tanhf(
-    float x
-) {
+inline float tanhf(float x) {
 #ifdef USE_ARDUINO_MATH
     return tanh(x);
 #else
@@ -416,11 +334,7 @@ float randf(
 // --- Sorting ---
 
 template <typename T>
-int partition(
-    Array<T> &arr,
-    int low,
-    int high
-) {
+int partition(Array<T> &arr, int low, int high) {
     T pivotVal = arr[high];
 
     int i = low;
@@ -439,11 +353,7 @@ int partition(
 
 // In-place
 template <typename T>
-void quicksort(
-    Array<T> &arr,
-    int low = 0,
-    int high = -1
-) {
+void quicksort(Array<T> &arr, int low = 0, int high = -1) {
     if (high == -1)
         high = arr.size() - 1;
     else
